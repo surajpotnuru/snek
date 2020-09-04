@@ -1,0 +1,13 @@
+.snek-playground {
+	background: black;
+	display: block;
+	position: relative;
+}
+.node {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	display: block;
+	background: white;
+	border-radius: 50%;
+}
