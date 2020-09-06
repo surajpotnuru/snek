@@ -7,7 +7,6 @@ class SnekNode extends React.Component {
         super(props);
         this.state = {
         };
-        console.log("Child State", this.state)
     }
 
     newPos = pos => {
@@ -15,13 +14,7 @@ class SnekNode extends React.Component {
     }
 
 	render() { 
-		return (
-			<React.Fragment>
-				<div className="snek-playground">
-					<div className="node" style={this.state.nodePos}></div>
-				</div>
-			</React.Fragment>
-		);
+		return <div className="node" style={this.state.nodePos}></div>
 	}
 }
 
