@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-
+import food from './food.png';
 class Food extends React.Component {
 
     constructor(props) {
@@ -22,7 +22,11 @@ class Food extends React.Component {
     }
 
 	render() { 
-		return <div className="node food" style={this.state.nodePos}></div>
+		return (
+            <div className="node food" style={this.state.nodePos}>
+                <img src={food}/>
+            </div>
+        );
 	}
 }
 

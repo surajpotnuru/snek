@@ -1,5 +1,9 @@
+.main-container{
+	margin-top: 20px;
+}
+
 .snek-playground {
-	background: black;
+	background: #1a1628 ;
 	display: block;
 	position: relative;
 }
@@ -13,6 +17,19 @@
 
 }
 .food {
-	background: red;
 	z-index: 0 !important;
+	background: #1a1628 !important;
+}
+.food img {
+	width: 30px;
+}
+.stat {
+	font-size: 11px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.main-title {
+	font-weight: bold;
+	color: gray;
+	text-transform: uppercase;
 }

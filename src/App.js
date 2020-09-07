@@ -3,6 +3,9 @@ import './App.css';
 import SnekNode from './SnekNode';
 import Food from './Food';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css';
+
 
 class App extends React.Component {
 	
@@ -23,7 +26,7 @@ class App extends React.Component {
 		};
 		this.playgroundStyle = {
 			width: Math.pow(this.state.nodeSize,2),
-			height: Math.pow(this.state.nodeSize,2)
+			height: (Math.pow(this.state.nodeSize,2) * 2) /3 
 		};
 	}
 
@@ -47,7 +50,7 @@ class App extends React.Component {
 			case "ArrowDown":
 				return {
 					left: this.state.nodePos.left,
-					top: this.state.nodePos.top + this.state.nodeSize < Math.pow(this.state.nodeSize, 2) ? this.state.nodePos.top + this.state.nodeSize : this.state.nodePos.top
+					top: this.state.nodePos.top + this.state.nodeSize < this.playgroundStyle.height ? this.state.nodePos.top + this.state.nodeSize : this.state.nodePos.top
 				};
 			case "ArrowLeft":
 				return {
@@ -56,7 +59,7 @@ class App extends React.Component {
 				};
 			case "ArrowRight":
 				return {
-					left: this.state.nodePos.left + this.state.nodeSize < Math.pow(this.state.nodeSize, 2) ? this.state.nodePos.left + this.state.nodeSize : this.state.nodePos.left,
+					left: this.state.nodePos.left + this.state.nodeSize < this.playgroundStyle.width ? this.state.nodePos.left + this.state.nodeSize : this.state.nodePos.left,
 					top: this.state.nodePos.top
 				};
 			default:
@@ -117,11 +120,20 @@ class App extends React.Component {
 	render() { 
 		return (
 			<React.Fragment>
-				<div className="snek-playground" style={this.playgroundStyle}>
-					{this.state.snekNodeElements.map((snekNodeElement, index) => <SnekNode ref={snekNodeElement} key={index}/>)}
-					<Food ref={this.state.foodElement}/>
+				<div className="container main-container">
+					<h1 className="main-title">Snek</h1>
+					<div className="row">
+						<div className="col-10">
+							<div className="snek-playground" style={this.playgroundStyle}>
+								{this.state.snekNodeElements.map((snekNodeElement, index) => <SnekNode ref={snekNodeElement} key={index}/>)}
+								<Food ref={this.state.foodElement}/>
+							</div>
+						</div>
+						<div className="col-2">
+						<h5 className="stat">Snek Length: {this.state.snekLength}</h5>
+						</div>
+					</div>
 				</div>
-				<p>{this.state.snekLength}</p>
 			</React.Fragment>
 		);
 	}
