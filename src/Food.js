@@ -24,7 +24,7 @@ class Food extends React.Component {
 	render() { 
 		return (
             <div className="node food" style={this.state.nodePos}>
-                <img src={food} alt="Food"/>
+                <img className="floating" src={food} alt="Food"/>
             </div>
         );
 	}
