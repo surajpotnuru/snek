@@ -14,9 +14,9 @@ class App extends React.Component {
 				top: 0
 			},
 			snekDirection: "ArrowRight",
-			refreshRate: 100,
+			refreshRate: 150,
 			snekLength: 1,
-			snekNodeElements: [React.createRef(), React.createRef()]
+			snekNodeElements: [React.createRef(), React.createRef(), React.createRef()]
 		};
 		this.playgroundStyle = {
 			width: Math.pow(this.state.nodeSize,2),
@@ -57,25 +57,35 @@ class App extends React.Component {
 					top: this.state.nodePos.top
 				};
 			default:
-				return {
-
-				}
+				break
 		};
 	}
 	
+	startGame = () => {
+		this.heartBeat();
+	}
+
 	heartBeat = () => {
+
 		let newHeadPos = this.getSnekHeadNewPos();
-		let oldPos = this.state.nodePos;
 		this.setState({nodePos: newHeadPos}, () => {
-			this.state.snekNodeElements[0].current.newPos(newHeadPos);
-			this.state.snekNodeElements[1].current.newPos(oldPos);
+			let tempPos = {};
+			this.state.snekNodeElements.forEach((element, index) => {
+				if (index === 0) {
+					tempPos = element.current.updateNewPosAndReturnOldPos(newHeadPos);
+				} else {
+					let tempPos2 = element.current.getPos();
+					element.current.updateNewPosAndReturnOldPos(tempPos);
+					tempPos = tempPos2;
+				}
+			});
 		});
 		setTimeout(this.heartBeat, this.state.refreshRate);
 	}
 
 	componentDidMount() {
 		document.addEventListener("keydown", this.changeSnekDirection);
-		this.heartBeat();
+		this.startGame();
 
 	}
 
