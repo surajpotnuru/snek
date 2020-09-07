@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import SnekNode from './SnekNode';
+import Food from './Food';
 
 
 class App extends React.Component {
@@ -16,7 +17,9 @@ class App extends React.Component {
 			snekDirection: "ArrowRight",
 			refreshRate: 150,
 			snekLength: 1,
-			snekNodeElements: [React.createRef(), React.createRef(), React.createRef()]
+			snekNodeElements: [React.createRef()],
+			foodElement: React.createRef(),
+			foodConsumed: 0
 		};
 		this.playgroundStyle = {
 			width: Math.pow(this.state.nodeSize,2),
@@ -63,11 +66,33 @@ class App extends React.Component {
 	
 	startGame = () => {
 		this.heartBeat();
+		this.produceFood();
+	}
+
+	produceFood = () => {
+		if (this.state.foodConsumed === 0) {
+			let left = Math.round(Math.random() * (this.state.nodeSize)) * (this.state.nodeSize);
+			let top = Math.round(Math.random() * (this.state.nodeSize)) * (this.state.nodeSize);
+			if (left < this.playgroundStyle.width && top < this.playgroundStyle.height) {
+				this.state.foodElement.current.setPos({left: left, top: top});
+				this.setState({foodConsumed: 1});
+			} else {
+				this.produceFood();
+			}
+		}
 	}
 
 	heartBeat = () => {
-
 		let newHeadPos = this.getSnekHeadNewPos();
+		if (this.state.foodElement.current.getPos().left === newHeadPos.left && this.state.foodElement.current.getPos().top === newHeadPos.top) {
+			this.setState({
+				foodConsumed: 0,
+				snekLength: this.state.snekLength + 1
+			}, () => {
+				this.produceFood();
+				this.state.snekNodeElements.push(React.createRef());
+			});
+		}
 		this.setState({nodePos: newHeadPos}, () => {
 			let tempPos = {};
 			this.state.snekNodeElements.forEach((element, index) => {
@@ -94,7 +119,9 @@ class App extends React.Component {
 			<React.Fragment>
 				<div className="snek-playground" style={this.playgroundStyle}>
 					{this.state.snekNodeElements.map((snekNodeElement, index) => <SnekNode ref={snekNodeElement} key={index}/>)}
+					<Food ref={this.state.foodElement}/>
 				</div>
+				<p>{this.state.snekLength}</p>
 			</React.Fragment>
 		);
 	}

@@ -9,5 +9,10 @@
 	position: absolute;
 	display: block;
 	background: white;
+	z-index: 999;
 
+}
+.food {
+	background: red;
+	z-index: 0 !important;
 }
